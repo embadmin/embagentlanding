@@ -9,7 +9,7 @@ export default function Home() {
       <section className="flex flex-col items-center text-center space-y-6">
         <Image src="/icons/detective.png" alt="Embagent Logo" width={120} height={120} />
         <h1 className="text-6xl font-bold uppercase">EMBAGENT</h1>
-        <button className="focus:outline-none hover:opacity-90 transition">
+        <button className="transition-transform duration-200 hover:scale-105 focus:outline-none">
           <Image
             src="/icons/learn-more-text-button.png"
             alt="Explore Now"
@@ -66,7 +66,7 @@ export default function Home() {
           {["Try Embagent", "Join our mailing list", "Support us"].map((label, idx) => (
             <div key={idx} className="bg-[#333] p-6 rounded-xl flex flex-col sm:flex-row items-center justify-between">
               <h3 className="text-xl font-semibold mb-2 sm:mb-0">{label}</h3>
-              <button className="focus:outline-none hover:opacity-90 transition">
+              <button className="transition-transform duration-200 hover:scale-105 focus:outline-none">
                 <Image
                   src="/icons/contact.png"
                   alt={`Learn more about ${label}`}
