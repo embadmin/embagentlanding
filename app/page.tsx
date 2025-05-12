@@ -14,25 +14,46 @@ export default function Home() {
         </button>
       </section>
 
-      {/* Features Section */}
+      {/* {/* Features Section */}
       <section className="text-center">
         <h2 className="text-3xl font-semibold mb-10">Features</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-          {[1, 2, 3, 4].map((_, idx) => (
-            <div key={idx} className="bg-[#333] p-6 rounded-xl shadow-md">
+          {[
+            {
+              title: "Natural Conversations",
+              icon: "/icons/robot-support.png",
+              desc: "Upload files, documents, or enter text to define exactly what your agent should know. Make it an expert in your product, service, or anything else you choose."
+            },
+            {
+              title: "Customize Your Agent",
+              icon: "/icons/file.png",
+              desc: "Upload files, documents, or enter text to define exactly what your agent should know. Make it an expert in your product, service, or anything else you choose."
+            },
+            {
+              title: "Embeddable Widget",
+              icon: "/icons/menu.png",
+              desc: "AI-powered responses that feel natural and human-like, creating engaging user experiences."
+            },
+            {
+              title: "Data Security",
+              icon: "/icons/lock.png",
+              desc: "Data privacy is a priority. Embagent doesn’t store sensitive information and follows best practices to keep your user interactions safe."
+            },
+          ].map(({ title, icon, desc }, idx) => (
+            <div key={idx} className="bg-[#333] p-6 rounded-xl shadow-md border border-white/10">
               <Image
-                src={`/icons/robot-support.png`}
-                alt={`Feature ${idx + 1}`}
+                src={icon}
+                alt={title}
                 width={40}
                 height={40}
                 className="mx-auto mb-4"
               />
-              <p>Feature description goes here. This will explain what the feature does in a sentence or two.</p>
+              <h3 className="text-lg font-semibold mb-2">{title}</h3>
+              <p className="text-sm text-gray-300">{desc}</p>
             </div>
           ))}
         </div>
       </section>
-
       {/* Get Involved Section */}
       <section className="text-center">
         <h2 className="text-3xl font-semibold mb-10">Get Involved</h2>
