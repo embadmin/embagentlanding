@@ -1,0 +1,113 @@
+/* Base Reset */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Helvetica Neue', sans-serif;
+    background-color: #1d1d1d;
+    color: white;
+    line-height: 1.6;
+  }
+  
+  h1, h2, h3 {
+    font-weight: bold;
+    color: #ffffff;
+  }
+  
+  button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    margin: 8px 0;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: background 0.2s ease;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  input, textarea, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #2c2c2c;
+    color: white;
+  }
+  
+  /* Step section layout */
+  .step {
+    padding: 2rem;
+    max-width: 700px;
+    margin: 0 auto;
+    display: none;
+  }
+  
+  .step.active {
+    display: block;
+  }
+  
+  /* Icon selection grid */
+  .icon-grid {
+    display: flex;
+    justify-content: space-around;
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+  
+  .icon-card {
+    border: 2px solid transparent;
+    border-radius: 12px;
+    padding: 1rem;
+    cursor: pointer;
+    background: #2a2a2a;
+    transition: all 0.3s ease;
+  }
+  
+  .icon-card img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+  }
+  
+  .icon-card:hover {
+    border-color: #4CAF50;
+  }
+  
+  .icon-card.selected {
+    border-color: #4CAF50;
+    box-shadow: 0 0 12px rgba(76, 175, 80, 0.5);
+  }
+  
+  /* Chat box */
+  #chatBox {
+    border: 1px solid #555;
+    background-color: #2b2b2b;
+    padding: 1rem;
+    height: 300px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+  }
+  
+  #chatBox div {
+    margin: 0.5rem 0;
+  }
+  
+  #chatBox div strong {
+    display: inline-block;
+    min-width: 60px;
+  }
+  
+  /* Info toggle */
+  #agentInfo {
+    background: #333;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+  }

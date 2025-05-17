@@ -83,7 +83,7 @@ export default function Home() {
       title: "Preview Embagent",
       description: "Use our free sandbox to build and test your own agent with files and expertise.",
       button: "/icons/create.png",
-      onClick: () => setShowCreateModal(true),
+      onClick: () => window.location.href = "/embagent/",
     },
     {
       title: "Join Our Mailing List",
