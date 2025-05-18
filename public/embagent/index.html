@@ -74,28 +74,31 @@
 
   <div id="step2" class="step">
     <h2>Step 2: Name Your Agent</h2>
-    <input type="text" id="agentName" placeholder="e.g. AskAlly" />
+    <input type="text" id="agentName" placeholder="e.g. Zenon" />
     <br><br>
+    <button onclick="goToStep1()">Back</button>
     <button onclick="goToStep3()">Next</button>
   </div>
   <div id="step3" class="step">
     <h2>Step 3: What is your agent’s mission?</h2>
-    <textarea id="agentMission" rows="4" cols="50" placeholder="e.g. Answer legal contract questions based on the uploaded documents."></textarea>
+    <textarea id="agentMission" rows="4" cols="50" placeholder="e.g. Customer Support, HR Support..."></textarea>
     <br><br>
+    <button onclick="goToStep2Back()">Back</button>
     <button onclick="goToStep4()">Next</button>
   </div>
   <div id="step4" class="step">
-    <h2>Step 4: Upload Agent Knowledge</h2>
-    <input type="file" id="knowledgeFile" accept=".txt" />
+    <h2>Step 4: Upload Knowledge</h2>
+    <input type="file" id="knowledgeFile" multiple />
     <br><br>
-    <button onclick="goToStep5()">Next</button>
+    <button onclick="goToStep3Back()">Back</button>
+    <button onclick="goToStep5()">Next</button> 
   </div>
   <div id="step5" class="step">
-    <h2>Step 5: Agent Created!</h2>
+    <h2>Step 5: Confirm Agent</h2>
     <div id="agentSummary"></div>
     <br>
-    <button onclick="submitAgent()">Chat Now</button>
-    <button onclick="alert('Embed option coming soon!')">Embed</button>
+    <button onclick="goToStep4Back()">Back</button>
+    <button onclick="submitAgent()">Create Agent</button>
   </div>
   <div id="chatScreen" class="step">
     <div style="display: flex; align-items: center; gap: 1rem;">

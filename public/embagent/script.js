@@ -26,6 +26,7 @@ let userAgent = {
     }
     document.getElementById("step1").classList.remove("active");
     document.getElementById("step2").classList.add("active");
+    // document.getElementById("step3").classList.remove("active");
   }
 
   function goToStep3() {
@@ -144,4 +145,23 @@ let userAgent = {
       
         const data = await response.json();
         appendMessage("agent", data.response);
+      }
+      function goToStep1() {
+        document.getElementById("step2").classList.remove("active");
+        document.getElementById("step1").classList.add("active");
+      }
+
+      function goToStep3Back() {
+        document.getElementById("step4").classList.remove("active");
+        document.getElementById("step3").classList.add("active");
+      }
+
+      function goToStep4Back() {
+        document.getElementById("step5").classList.remove("active");
+        document.getElementById("step4").classList.add("active");
+      }
+
+      function goToStep2Back() {
+        document.getElementById("step3").classList.remove("active");
+        document.getElementById("step2").classList.add("active");
       }
