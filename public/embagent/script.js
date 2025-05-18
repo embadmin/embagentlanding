@@ -101,7 +101,7 @@ let userAgent = {
         document.getElementById("step5").classList.remove("active");
         document.getElementById("chatScreen").classList.add("active");
       
-        document.getElementById("agentAvatar").src = `../icons/${userAgent.icon}`;
+        document.getElementById("agentAvatar").src = `/embagent/icons/${userAgent.icon}`;
         document.getElementById("agentDisplayName").innerText = userAgent.name;
         document.getElementById("agentMissionInfo").innerText = userAgent.mission;
         document.getElementById("agentFilesInfo").innerText = userAgent.file.name;
