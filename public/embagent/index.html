@@ -52,6 +52,18 @@
   </style>
 </head>
 <body>
+  <button onclick="goHome()" id="homeButton" style="
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 999;
+  background-color: #333;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+">Home</button>
 
   <div id="step1" class="step active">
     <h2>Step 1: Pick Your Agent Icon</h2>
@@ -69,6 +81,7 @@
       <div class="icon-card" data-icon="chatinfo.png"><img src="../embagent/icons/chat-info.png" alt="Support Robot Icon"></div>
 
     </div>
+    <button onclick="goHome()">Home</button>
     <button onclick="goToStep2()">Next</button>
   </div>
 

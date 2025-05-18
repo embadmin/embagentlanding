@@ -165,3 +165,6 @@ let userAgent = {
         document.getElementById("step3").classList.remove("active");
         document.getElementById("step2").classList.add("active");
       }
+      function goHome() {
+        window.location.href = "/";  // 👈 Update to "/landing" if that's your landing route
+      }
