@@ -58,6 +58,7 @@
   right: 20px;
   z-index: 999;
   background-color: #333;
+  color: white;
   padding: 8px 16px;
   border: none;
   border-radius: 8px;
@@ -100,11 +101,30 @@
     <button onclick="goToStep4()">Next</button>
   </div>
   <div id="step4" class="step">
-    <h2>Step 4: Upload Knowledge</h2>
+    <h2>Step 4: Train Your Agent</h2>
+  
+    <label for="agentExpertise">What should your agent be an expert in?</label>
+    <input type="text" id="agentExpertise" placeholder="e.g. Facebook page help, Shopify setup" />
+  
+    <label for="agentEtiquette">Pick your agent’s tone/etiquette:</label>
+    <select id="agentEtiquette">
+      <option value="Chill">Chill</option>
+      <option value="Professional">Professional</option>
+      <option value="Funny">Funny</option>
+      <option value="Empathetic">Empathetic</option>
+      <option value="Concise">Concise</option>
+    </select>
+  
+    <label for="agentLinks">Add helpful links (optional):</label>
+    <textarea id="agentLinks" placeholder="Enter helpful URLs, separated by commas..."></textarea>
+  
+    <label for="knowledgeFile">Upload knowledge files (e.g. guides, FAQs):</label>
     <input type="file" id="knowledgeFile" multiple />
-    <br><br>
-    <button onclick="goToStep3Back()">Back</button>
-    <button onclick="goToStep5()">Next</button> 
+  
+    <div class="button-row">
+      <button onclick="goToStep3Back()">Back</button>
+      <button onclick="goToStep5()">Next</button>
+    </div>
   </div>
   <div id="step5" class="step">
     <h2>Step 5: Confirm Agent</h2>
@@ -123,7 +143,7 @@
     <div id="agentInfo" style="display: none; margin-top: 0.5rem;">
       <p><strong>Mission:</strong> <span id="agentMissionInfo"></span></p>
       <p><strong>Files:</strong> <span id="agentFilesInfo"></span></p>
-      <input type="file" id="addMoreFiles" accept=".txt" />
+      <input type="file" id="knowledgeFile" multiple />
     </div>
   
     <hr />
