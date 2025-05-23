@@ -1,12 +1,15 @@
-const API_BASE = window.location.hostname === "localhost"
-  ? "http://127.0.0.1:8000"
-  : "https://embagent-openai-api.onrender.com"; // 👈 replace with your actual Render URL
+const API_BASE = "https://embagent-openai-api.onrender.com";
 
-let userAgent = {
+  let userAgent = {
     icon: null,
     name: null,
     mission: null,
-    file: null
+    files: [],
+    expertise: '',
+    etiquette: '',
+    links: '',
+    knowledgeText: '',
+    session_id: Date.now().toString()  // ← Simple unique ID
   };
   
   document.querySelectorAll(".icon-card").forEach(card => {
@@ -55,17 +58,19 @@ let userAgent = {
         document.getElementById("step3").classList.remove("active");
         document.getElementById("step4").classList.add("active");
       }
-
       function goToStep5() {
         const fileInput = document.getElementById("knowledgeFile");
-        const file = fileInput.files[0];
+        const files = Array.from(fileInput.files);
       
-        if (!file) {
-          alert("Please upload a knowledge file for your agent.");
+        const links = document.getElementById("agentLinks").value.trim();
+      
+        if (files.length === 0 && links === "") {
+          alert("Please upload at least one file OR enter a link.");
           return;
         }
       
-        userAgent.file = file;
+        userAgent.files = files;
+        userAgent.links = links;
       
         document.getElementById("step4").classList.remove("active");
         document.getElementById("step5").classList.add("active");
@@ -75,39 +80,66 @@ let userAgent = {
           <p><strong>Icon:</strong> ${userAgent.icon}</p>
           <p><strong>Name:</strong> ${userAgent.name}</p>
           <p><strong>Mission:</strong> ${userAgent.mission}</p>
-          <p><strong>File:</strong> ${userAgent.file.name}</p>
+          <p><strong>Expertise:</strong> ${userAgent.expertise}</p>
+          <p><strong>Etiquette:</strong> ${userAgent.etiquette}</p>
+          <p><strong>Links:</strong> ${links || "None provided"}</p>
+          <p><strong>Files:</strong> ${
+            files.length > 0 ? files.map(f => f.name).join(", ") : "None provided"
+          }</p>
         `;
       }
-
       async function submitAgent() {
-        const formData = new FormData();
-        formData.append("file", userAgent.file);
-        formData.append("usecase", `${userAgent.name} - ${userAgent.mission}`);
+        document.getElementById("loadingOverlay").style.display = "flex";
       
-        const res = await fetch(`https://embagent-openai-api.onrender.com/upload`, {
-          method: "POST",
-          body: formData,
+        const formData = new FormData();
+      
+        userAgent.files.forEach(file => {
+          formData.append("files", file);  // ✅ FastAPI default
         });
       
-        const data = await res.json();
+        formData.append("usecase", `${userAgent.name} - ${userAgent.mission}`);
+        formData.append("expertise", userAgent.expertise);
+        formData.append("etiquette", userAgent.etiquette);
+        formData.append("links", userAgent.links);
       
-        // 🧠 Read the file content and store it in userAgent.knowledgeText
-        const reader = new FileReader();
-        reader.onload = function () {
-          userAgent.knowledgeText = reader.result;
-        };
-        reader.readAsText(userAgent.file);
+        // ✅ LOGGING GOES HERE
+        console.log("FormData being sent:");
+        for (let [key, value] of formData.entries()) {
+          console.log(key, value);
+        }
       
-        // ⛱️ Move to the chat screen
-        document.getElementById("step5").classList.remove("active");
-        document.getElementById("chatScreen").classList.add("active");
+        try {
+          const res = await fetch(`${API_BASE}/upload`, {
+            method: "POST",
+            body: formData
+          });
       
-        document.getElementById("agentAvatar").src = `/embagent/icons/${userAgent.icon}`;
-        document.getElementById("agentDisplayName").innerText = userAgent.name;
-        document.getElementById("agentMissionInfo").innerText = userAgent.mission;
-        document.getElementById("agentFilesInfo").innerText = userAgent.file.name;
+          if (!res.ok) {
+            throw new Error(`Server responded with ${res.status}`);
+          }
       
-        appendMessage("agent", data.bot_response);
+          const data = await res.json();
+
+          // 🧠 Store knowledge for later use in chat
+          userAgent.knowledgeText = data.bot_response || "";
+          
+          // ✅ Proceed to chat
+          document.getElementById("loadingOverlay").style.display = "none";
+          document.getElementById("step5").classList.remove("active");
+          document.getElementById("chatScreen").classList.add("active");
+          
+          document.getElementById("agentAvatar").src = `/embagent/icons/${userAgent.icon}`;
+          document.getElementById("agentDisplayName").innerText = userAgent.name;
+          document.getElementById("agentMissionInfo").innerText = userAgent.mission;
+          document.getElementById("agentFilesInfo").innerText = userAgent.files.map(f => f.name).join(', ');
+          
+          // ✅ Show AI's intro message
+          appendMessage("agent", userAgent.knowledgeText);
+        } catch (err) {
+          console.error("❌ Failed to submit agent:", err);
+          alert("❌ Error creating agent: " + err.message);
+          document.getElementById("loadingOverlay").style.display = "none";
+        }
       }
       function toggleAgentInfo() {
         const infoBox = document.getElementById("agentInfo");
@@ -131,17 +163,22 @@ let userAgent = {
       
         appendMessage("user", userText);
         input.value = "";
-        const response = await fetch(`https://embagent-openai-api.onrender.com/chat`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              message: userText,
-              icon: userAgent.icon,
-              name: userAgent.name,
-              mission: userAgent.mission,
-              knowledge: userAgent.knowledgeText
-            })
-          });
+      
+        const response = await fetch(`${API_BASE}/chat`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            session_id: userAgent.session_id,
+            message: userText,
+            icon: userAgent.icon,
+            name: userAgent.name,
+            mission: userAgent.mission,
+            knowledge: userAgent.knowledgeText,
+            expertise: userAgent.expertise,
+            etiquette: userAgent.etiquette,
+            links: userAgent.links
+          })
+        });
       
         const data = await response.json();
         appendMessage("agent", data.response);
