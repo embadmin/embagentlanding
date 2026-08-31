@@ -1,20 +1,35 @@
-/* Base Reset */
-body {
+/* ==========================================================================
+   Base Reset & Typography
+   ========================================================================== */
+   body {
     margin: 0;
-    padding: 0;
+    padding: 5%;
     font-family: 'Helvetica Neue', sans-serif;
     background-color: #1d1d1d;
     color: white;
     line-height: 1.6;
   }
+  /* Landing‐page Home button: fixed in the corner */
+/* body > #homeButton {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    background: transparent;
+    border: none;
+    padding-top: 4rem;
+    z-index: 100;
+  } */
   
   h1, h2, h3 {
     font-weight: bold;
     color: #ffffff;
   }
   
+  /* ==========================================================================
+     Buttons
+     ========================================================================== */
   button {
-    background-color: #4CAF50;
+    background-color: #c76f2282;
     border: none;
     color: white;
     padding: 10px 20px;
@@ -26,10 +41,77 @@ body {
   }
   
   button:hover {
-    background-color: #45a049;
+    background-color: #f78e44;
+  }
+  /* ==========================================================================
+   Home Button: make it just the image (no background/borders)
+   ========================================================================== */
+#homeButton {
+    background: transparent;  /* remove green bg */
+    border: none;             /* remove default border */
+    padding: 0;               /* collapse any extra space */
+    width: auto;              /* let img define size */
+    height: auto;
+    position: absolute;
+    left: 1rem;
+    /* top: 50%; */
+    /* transform: translateY(-50%); */
   }
   
-  input, textarea, select {
+  #homeButton img {
+    display: block;           /* no inline-gap under the img */
+    width: 8%;              /* keep your chosen icon size */
+    height: 8%;
+  }
+  /* ─── Navigation Icon-Only Buttons ───────────────────────────────── */
+.step .btn-primary,
+.step .btn-secondary {
+    background: transparent !important;
+    border: none           !important;
+    padding: 0             !important;
+    margin: 0              !important; /* kill the 8px vertical margins */
+  }
+
+
+  /* ─── Icon-Only Navigation Buttons ──────────────────────────────────── */
+/* 1) Wrap your Back/Next buttons in <div class="navigation">…</div> */
+
+/* Ensure the wrapper sits them side-by-side */
+.step .navigation {
+    display: flex !important;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;            /* optional spacing above */
+    width: fit-content;          /* shrink-wrap to the icons */
+    margin-left: auto;           /* center under the form */
+    margin-right: auto;
+  }
+  
+  /* Strip out all the global button styles */
+  .step .navigation button {
+    background: transparent !important;
+    border: none           !important;
+    padding: 0             !important;
+    margin: 0              !important;
+    width: auto            !important;
+    height: auto           !important;
+    display: inline-flex   !important;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Size the actual icon images with fixed px */
+  .step .navigation button img {
+    width: 7em !important;      /* use whatever exact px you prefer */
+    height: 7em !important;
+    display: block;
+  }
+  /* ==========================================================================
+     Form Elements
+     ========================================================================== */
+  input,
+  textarea,
+  select {
     width: 100%;
     padding: 10px;
     margin-top: 8px;
@@ -40,7 +122,9 @@ body {
     color: white;
   }
   
-  /* Step section layout */
+  /* ==========================================================================
+     Step-Wizard Layout
+     ========================================================================== */
   .step {
     padding: 2rem;
     max-width: 700px;
@@ -52,98 +136,356 @@ body {
     display: block;
   }
   
-  /* Icon selection grid */
+  /* ==========================================================================
+     Icon Selection Grid
+     ========================================================================== */
   .icon-grid {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     gap: 1.5rem;
-    margin: 2rem 0;
+    justify-content: center;
+    margin-bottom: 2rem;
   }
   
   .icon-card {
-    width: 120px;
-    height: 120px;
-    background-color: #2a2a2a;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: transform 0.2s ease, border 0.2s ease, box-shadow 0.2s ease;
     border: 2px solid transparent;
+    border-radius: 12px;
+    padding: 1rem;
+    cursor: pointer;
+    background: #2a2a2a;
+    transition: all 0.3s ease;
   }
   
   .icon-card img {
-    max-width: 80%;
-    max-height: 80%;
+    width: 100px;
+    height: 100px;
     object-fit: contain;
   }
   
   .icon-card:hover {
-    transform: scale(1.05);
-    border-color: #888;
+    border-color: #c77f2c;
   }
   
   .icon-card.selected {
     border-color: #4CAF50;
-    box-shadow: 0 0 10px #4CAF50;
-    transform: scale(1.08);
+    box-shadow: 0 0 12px rgba(76, 175, 80, 0.5);
   }
-  /* Chat box */
+  
+  /* ==========================================================================
+     Chat Screen Layout Fixes
+     ========================================================================== */
+/* ─── Chat Panel Width, Padding & Height ────────────────────────────── */
+/* ─── Chat Panel Sidebar ────────────────────────────────────────── */
+#chatScreen {
+    position: fixed;        /* pin to viewport */
+    top: 0;                 
+    right: 0;
+
+    height: 100vh;          /* full viewport height */
+    background: #1e1e1e;    /* match theme */
+    padding: 0 1rem;        /* horizontal breathing room */
+    box-sizing: border-box; /* include padding in width calculation */
+    display: none;          /* toggled via .active */
+    flex-direction: column; /* header + messages + input */
+    z-index: 999;           /* sit above other content */
+    box-shadow: -2px 0 8px rgba(0,0,0,0.3);
+  }
+  
+  #chatScreen.active {
+    display: flex;
+    width: 100%;
+  }
+  #chatScreen.info-visible #agentInfo {
+    display: block;               /* shown when .info-visible */
+  }
   #chatBox {
-    border: 1px solid #555;
-    background-color: #2b2b2b;
-    padding: 1rem;
-    height: 300px;
+    display: flex;            /* ← turn on flex layout */
+    flex-direction: column;   /* ← stack messages vertically */
+    gap: 0.5rem;              /* ← space between bubbles */
+    flex: 1 1 auto;           /* ← fill the space above the input */
     overflow-y: auto;
-    margin-bottom: 1rem;
-    border-radius: 8px;
+    padding-bottom: calc(20% + 4rem);
   }
-  
-  #chatBox div {
-    margin: 0.5rem 0;
-  }
-  
-  #chatBox div strong {
-    display: inline-block;
-    min-width: 60px;
-  }
-  
-  /* Info toggle */
-  #agentInfo {
-    background: #333;
+/* Header‐zone flex (you already have this) */
+#chatHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 1rem;
-    border-radius: 8px;
-    margin-top: 1rem;
+    background: transparent;
   }
-
-
-
-
-  #loadingOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.75);
-    z-index: 9999;
+  /* ─── Header‐Right: strip pill styling from both buttons ─────────── */
+#chatHeader .header-right button {
+    background: transparent !important;
+    border: none            !important;
+    padding: 0              !important;
+    margin: 0               !important;
+    cursor: pointer;
+  }
+  
+  /* Uniform 5rem × 5rem sizing, same as the “i” */
+  #chatHeader .header-right button img {
+    width: 5rem !important;
+    height: 5rem !important;
+    object-fit: contain;
+    display: block;
+  }
+  
+  
+  /* Zone wrappers */
+  .header-left,
+  .header-center,
+  .header-right {
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 1rem;
   }
   
-  .spinner {
-    border: 8px solid #f3f3f3;
-    border-top: 8px solid #4CAF50;
+  
+  /* Center group (avatar + name) */
+/* ─── Header Center: stack icon above name ───────────────────────── */
+#chatHeader .header-center {
+    display: flex;
+    flex-direction: column;    /* stack vertically */
+    align-items: center;       /* center horizontally */
+    justify-content: center;
+    gap: 0.25rem;              /* small space between icon & name */
+  }
+  
+  /* Move the name below and remove the right margin */
+  #chatHeader .header-center img {
+    margin: 0 0 0.5rem 0;       /* only bottom margin */
+    width: 6rem;
+    height: 6rem;
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
+  }
+
+/* Now scope the positioning to within #chatHeader */
+#chatHeader .header-left > #homeButton,
+#chatHeader .header-left > #startOver {
+  /* no extra positioning needed—flex does it */
+}
+
+
+
+/* Shared button reset */
+#chatHeader button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* Header icon sizing */
+#chatHeader button img {
+  width: 5rem;
+  height: 5rem;
+  object-fit: contain;
+}
+/* Info button on the far right */
+/* #infoToggle {
+    position: absolute;
+    right: 1rem;           
+    background: transparent;
+    border: none;
+    /* transform: translateY(-50%); */
+    /* top: 50%; */
+  /* } */ 
+  
+  /* Start Over button on the far right */
+  #closeChat {
+    position: absolute;
+    right: 1rem;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  /* Tweak the name style if you like */
+  #agentDisplayName {
+    font-size: 2.1rem;
+    font-family: monospace;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+  }
+  
+  /* Agent Info Panel */
+  #agentInfo {
+    flex: 0 0 auto;
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+    background: #2a2a2a;
+    display: none;
+  }
+  
+  /* Chat Input Area */
+  #chatInputArea {
+    position: absolute;            /* take it out of the flex flow */
+    bottom: 20%;                   /* sit 20% up from bottom */
+    left: 50%;                     /* center horizontally */
+    transform: translateX(-50%);   /* perfect centering */
+    width: 80%;                    /* adjust to taste */
+    max-width: 700px;              /* prevent it from getting too huge */
+    
+    background: #1e1e1e;           /* match your dark theme */
+    border: 2px solid #5c2d91;     /* purple border */
+    border-radius: 9999px;         /* full pill shape */
+    box-shadow: 0 0 12px #5c2d91;  /* glowing purple */
+    
+    display: flex;                 /* keep input + button inline */
+    align-items: center;
+    padding: 0.25rem 0.75rem;      /* vertical & horizontal space inside pill */
+    z-index: 1000;                 /* float above messages */
+  }
+/* Stretch the text field, remove its own borders */
+#chatInputArea input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: #eee;
+    font-size: 1rem;
+    padding: 0.5rem;               /* text breathing room */
+    border-radius: 9999px;         /* match the container */
+    outline: none;                 /* no default focus ring */
+  }
+  
+  /* Style the Send button to sit inside the pill */
+  #chatInputArea button {
+    background: #5c2d91;
+    border: none;
+    border-radius: 9999px;
+    padding: 0.5rem 1rem;
+    color: #fff;
+    cursor: pointer;
+    margin-left: 0.5rem;
+    transition: box-shadow 0.2s ease;
+  }
+  #chatInputArea button:hover {
+    box-shadow: 0 0 8px #5c2d91;
+  }
+  /* ==========================================================================
+     Fade-In Animation
+     ========================================================================== */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* ==========================================================================
+     Chat-Active Mode
+     ========================================================================== */
+  body.chat-active .step {
+    display: none !important;
+  }
+  
+  /* ==========================================================================
+     Responsive Adjustments
+     ========================================================================== */
+  @media (max-width: 768px) {
+    #chatScreen {
+      width: 100vw;
+      height: 100vh;
+    }
+  }
+  
+  /* ==========================================================================
+     Message Bubbles
+     ========================================================================== */
+  /* #chatBox {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  } */
+  
+/* ─── Message Styling ───────────────────────────────────────── */
+.message {
+    width: fit-content;
+    max-width: 80%;              /* limit width for readability */
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    display: block;
+  }
+  
+  .message-header {
+    font-weight: bold;
+    font-size: 0.95rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  .message-body {
+    font-size: 1rem;              /* bump body font */
+    line-height: 1.4;
+    white-space: pre-wrap;        /* allow wrapped lines */
+  }
+  
+  /* Agent vs. User colors */
+  .message.agent .message-header {
+    color: #c76f22;               /* purple for agent name */
+    text-transform: uppercase;
+  }
+  .message.agent {
+    background: #2a2a2a;
+    color: #e0e0e0;
+    align-self: flex-start;
+    padding: 0.75rem 1rem;
+    margin-top: 1rem;
+    margin-right: auto;
+
+  }
+  
+  .message.user .message-header {
+    color: #00000082;               /* green for you */
+    text-transform: uppercase;
+  }
+  .message.user {
+    background: #c76f2282;
+    color: #fff;
+    align-self: flex-end;
+    padding: 0.75rem 1rem;
+   }
+  /*#startOver {
+    position: absolute;
+    left: 6rem;        adjust this offset to taste
+    top: 50%;
+    transform: translateY(-50%);
+  } */
+
+  #chatHeader #infoToggle,
+#chatHeader #startOver {
+  position: static !important;
+}
+
+/* ─── Loading overlay ─────────────────────────────────────────── */
+#loadingOverlay {
+    display: none;               /* hidden by default */
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;     /* center the spinner */
+    align-items: center;
+    z-index: 10000;
+  }
+  
+  /* when we add `.active`, it becomes a flex container */
+  #loadingOverlay.active {
+    display: flex;
+  }
+  
+  /* Your existing spinner styling will apply as before */
+  .spinner {
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #63497b;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
     animation: spin 1s linear infinite;
   }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+  /* ─── Spinner Animation ──────────────────────────────────────────── */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
   }
