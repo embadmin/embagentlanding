@@ -1,192 +1,43 @@
 'use client';
 import Image from "next/image";
-import { useRef, useState } from "react";
-import Modal from './components/Modal';
+import { FormEvent, useState } from "react";
 import { motion } from "framer-motion";
-export default function Home() {
-  const featuresRef = useRef<HTMLElement>(null);
+import Modal from "./components/Modal";
 
-  const [showCreateModal, setShowCreateModal] = useState(false);
+const features = [
+  { number: "01", title: "Give it a personality", icon: "/icons/robot-support.png", desc: "Choose a name, icon, voice, and tone so your agent feels like a natural extension of your team." },
+  { number: "02", title: "Teach it what matters", icon: "/icons/file.png", desc: "Add documents, product knowledge, and your own instructions. Your agent answers from the context you provide." },
+  { number: "03", title: "Put it where people work", icon: "/icons/menu.png", desc: "Embed it in a website, product, dashboard, or internal workflow—wherever questions already happen." },
+  { number: "04", title: "Keep knowledge protected", icon: "/icons/lock.png", desc: "Privacy-conscious defaults help keep sensitive information out of places it does not belong." },
+];
+const reveal = { initial: { opacity: 0, y: 28 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, amount: 0.2 }, transition: { duration: 0.65, ease: "easeOut" as const } };
+
+export default function Home() {
   const [showJoinModal, setShowJoinModal] = useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
   const [joinSuccess, setJoinSuccess] = useState(false);
   const [contactSuccess, setContactSuccess] = useState(false);
-  const scrollToFeatures = () => {
-    featuresRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  async function submitForm(event: FormEvent<HTMLFormElement>, endpoint: string, onSuccess: () => void) { event.preventDefault(); const response = await fetch(endpoint, { method: "POST", body: new FormData(event.currentTarget), headers: { Accept: "application/json" } }); if (response.ok) onSuccess(); }
 
-  return (
-    <main className="bg-[#222222] text-white min-h-screen px-6 py-12 space-y-24 font-sans">
-      
-      {/* Title Section */}
-      <section className="flex flex-col items-center justify-center text-center min-h-screen space-y-6">
-        <Image src="/icons/detective.png" alt="Embagent Logo" width={280} height={120} />
-        <h1 className="text-6xl font-anton font-bold uppercase tracking-widest">EMBAGENT</h1>
-        <button onClick={scrollToFeatures} className="transition-transform duration-200 hover:scale-105 focus:outline-none">
-          <Image src="/icons/go-button.png" alt="Explore Now" width={140} height={60} />
-        </button>
-      </section>
+  return <main>
+    <header className="site-nav"><a className="wordmark" href="#top"><Image src="/icons/detective.png" alt="" width={46} height={46}/><span>EMBAGENT</span></a><nav aria-label="Main navigation"><a href="#how">How it works</a><a href="#features">Features</a><button onClick={() => setShowContactModal(true)}>Contact</button></nav><a className="nav-cta" href="/embagent/">Try the sandbox <span>↗</span></a></header>
 
-      {/* Features Section */}
-      <motion.section
-  ref={featuresRef}
-  initial={{ opacity: 0, y: 50 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.8, ease: "easeOut" }}
-  viewport={{ amount:0.3 }}
-  className="text-center"
->
-  <h2 className="text-3xl font-anton font-semibold mb-10 tracking-wider">FEATURES</h2>
-  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-    {[
-      {
-        title: "Create Your Agent",
-        icon: "/icons/robot-support.png",
-        desc: "Make it yours. Choose your agent’s name, icon, tone of voice, and personality to match your needs. Don't see what you want? Let us know and we’ll add it.",
-      },
-      {
-        title: "Customize Your Agent",
-        icon: "/icons/file.png",
-        desc: "Upload files, documents, or enter text to define exactly what your agent should know. Make it an expert in your product, service, or anything else you choose."
-      },
-      {
-        title: "Embeddable Widget",
-        icon: "/icons/menu.png",
-        desc: "Agents can be embedded into web apps, dashboards, or internal platforms or even run as persistent assistants alongside your systems to support tasks and decisions as you work."
-      },
-      {
-        title: "Data Security",
-        icon: "/icons/lock.png",
-        desc: "Data privacy is a priority. Embagent doesn’t store sensitive information and follows best practices to keep your user interactions safe."
-      },
-    ].map(({ title, icon, desc }, idx) => (
-      <div key={idx} className="bg-[#333] p-6 rounded-xl shadow-md border border-white/10">
-        <Image src={icon} alt={title} width={40} height={40} className="mx-auto mb-4" />
-        <h3 className="text-lg font-anton font-semibold mb-2 tracking-wide">{title}</h3>
-        <p className="text-sm text-gray-300">{desc}</p>
-      </div>
-    ))}
-  </div>
-</motion.section>
+    <section className="hero" id="top"><div className="hero-copy"><div className="eyebrow"><span className="status-dot"/> Agent builder · early access</div><h1>Your smartest<br/>teammate is <em>custom-built.</em></h1><p>Create an AI agent with your knowledge, your voice, and a job to do. No generic answers. No one-size-fits-all bot.</p><div className="hero-actions"><a className="primary-cta" href="/embagent/"><span>Build your agent</span><Image src="/icons/create.png" alt="" width={116} height={42}/></a><button className="text-link" onClick={() => document.getElementById("how")?.scrollIntoView({ behavior: "smooth" })}>See how it works ↓</button></div><div className="trust-line"><span>◆ Your knowledge</span><span>◆ Your personality</span><span>◆ Your workflow</span></div></div>
+      <div className="hero-visual" aria-label="EmbAgent product preview"><div className="orbit orbit-one"/><div className="orbit orbit-two"/><div className="detective-wrap"><Image src="/icons/detective.png" alt="EmbAgent detective mascot" width={360} height={360} priority/></div><motion.div className="clue-card clue-one" animate={{ y:[0,-8,0],rotate:[-3,-1,-3] }} transition={{duration:4,repeat:Infinity}}><Image src="/icons/file.png" alt="" width={38} height={38}/><span><strong>Context found</strong>12 files learned</span></motion.div><motion.div className="clue-card clue-two" animate={{ y:[0,7,0],rotate:[3,1,3] }} transition={{duration:4.8,repeat:Infinity}}><Image src="/icons/robot-support.png" alt="" width={42} height={42}/><span><strong>Agent ready</strong>Ask me anything</span></motion.div><div className="hero-stamp">CASE<br/>SOLVED</div></div></section>
 
-      {/* Get Involved Section */}
-      <motion.section
-  initial={{ opacity: 0, y: 50 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.8, ease: "easeOut" }}
-  viewport={{ amount: 0.3 }}
-  className="text-center"
->        <h2 className="text-3xl font-anton font-semibold mb-10 tracking-wider">GET INVOLVED</h2>
-        <div className="flex flex-wrap justify-center gap-6 max-w-6xl mx-auto">
-  {[
-    {
-      title: "Preview Embagent",
-      description: "Use our free sandbox to build and test your own agent with files and expertise.",
-      button: "/icons/create.png",
-      onClick: () => window.location.href = "/embagent/",
-    },
-    {
-      title: "Join Our Mailing List",
-      description: "Be the first to get updates, new features, and exclusive invites as we build.",
-      button: "/icons/join.png",
-      onClick: () => setShowJoinModal(true),
-    },
-    {
-      title: "Support Us",
-      description: "Help us grow Embagent. Share feedback, sponsor a feature, or spread the word.",
-      button: "/icons/contact.png",
-      onClick: () => setShowContactModal(true),
-    },
-  ].map(({ title, description, button, onClick }, idx) => (
-    <div
-      key={idx}
-      className="flex flex-col justify-between items-center text-center bg-[#333] text-white rounded-xl p-6 w-full max-w-xs h-[270px] shadow-md border border-white/10"
-    >
-      <div className="space-y-4">
-        <h3 className="text-xl font-anton font-bold tracking-wide">{title}</h3>
-        <p className="text-sm text-gray-300">{description}</p>
-      </div>
-      <button onClick={onClick} className="transition-transform duration-200 hover:scale-105 focus:outline-none mt-6">
-        <Image src={button} alt={`Learn more about ${title}`} width={120} height={40} />
-      </button>
-    </div>
-  ))}
-</div>
-</motion.section>
+    <div className="ticker" aria-hidden="true"><div>BUILD IT ◆ TEACH IT ◆ EMBED IT ◆ BUILD IT ◆ TEACH IT ◆ EMBED IT ◆ BUILD IT ◆ TEACH IT ◆ EMBED IT ◆</div></div>
 
-      {/* Modals */}
-      <Modal isOpen={showCreateModal} onClose={() => setShowCreateModal(false)}>
-        <Image src="/icons/coming-soon.png" alt="Coming Soon" width={500} height={500} />
-      </Modal>
+    <motion.section className="how-section" id="how" {...reveal}><div className="section-heading"><span>THE FIELD NOTES / 001</span><h2>From blank slate<br/>to useful agent.</h2><p>Three straightforward steps. You bring the expertise; Embagent turns it into something people can talk to.</p></div><div className="steps"><article><span className="step-number">01</span><Image src="/icons/robot.png" alt="" width={76} height={76}/><h3>Create</h3><p>Name your agent, choose its role, and decide how it should sound.</p></article><article><span className="step-number">02</span><Image src="/icons/file.png" alt="" width={76} height={76}/><h3>Train</h3><p>Give it the documents and guidance it needs to answer with confidence.</p></article><article><span className="step-number">03</span><Image src="/icons/chain-linked.png" alt="" width={76} height={76}/><h3>Deploy</h3><p>Preview it, refine it, then bring it into the experience your users already know.</p></article></div></motion.section>
 
-      <Modal isOpen={showJoinModal} onClose={() => setShowJoinModal(false)}>
-  {joinSuccess ? (
-    <div className="text-center space-y-4">
-      <h3 className="text-xl font-bold">Thank you!</h3>
-      <p>You are now on our mailing list! 🥳</p>
-    </div>
-  ) : (
-    <form
-      onSubmit={async (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.currentTarget);
-        const res = await fetch('https://formspree.io/f/mnndzvrz', {
-          method: 'POST',
-          body: formData,
-          headers: { Accept: 'application/json' }
-        });
-        if (res.ok) setJoinSuccess(true);
-      }}
-      className="space-y-4"
-    >
-      <h3 className="text-xl font-bold">Join Our Mailing List</h3>
-      <input type="email" name="email" required placeholder="Your Email" className="w-full p-2 border rounded" />
-      <label className="flex items-center space-x-2 text-sm">
-        <input type="checkbox" name="consent" required className="accent-black" />
-        <span>I consent to receive emails</span>
-      </label>
-      <button type="submit" className="mx-auto block transition-transform hover:scale-105">
-        <Image src="/icons/join.png" alt="Join" width={120} height={40} />
-      </button>
-    </form>
-  )}
-</Modal>
+    <motion.section className="features-section" id="features" {...reveal}><div className="section-heading compact"><span>WHAT’S IN THE KIT / 002</span><h2>Built to feel like yours.</h2></div><div className="feature-grid">{features.map(feature=><article className="feature-card" key={feature.number}><div className="feature-top"><span>{feature.number}</span><Image src={feature.icon} alt="" width={52} height={52}/></div><h3>{feature.title}</h3><p>{feature.desc}</p></article>)}</div></motion.section>
 
-      <Modal isOpen={showContactModal} onClose={() => setShowContactModal(false)}>
-  {contactSuccess ? (
-    <div className="text-center space-y-4">
-      <h3 className="text-xl font-bold">Thank you!</h3>
-      <p>We will be in contact soon! 🏃🏽‍♀️</p>
-    </div>
-  ) : (
-    <form
-      onSubmit={async (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.currentTarget);
-        const res = await fetch('https://formspree.io/f/mwpoqbzl', {
-          method: 'POST',
-          body: formData,
-          headers: { Accept: 'application/json' }
-        });
-        if (res.ok) setContactSuccess(true);
-      }}
-      className="space-y-4"
-    >
-      <h3 className="text-xl font-bold">Contact Us</h3>
-      <input type="text" name="name" required placeholder="Your Name" className="w-full p-2 border rounded" />
-      <input type="email" name="email" required placeholder="Your Email" className="w-full p-2 border rounded" />
-      <select name="reason" className="w-full p-2 border rounded">
-        <option>General Inquiry</option>
-        <option>Feedback</option>
-        <option>Partnership</option>
-      </select>
-      <textarea name="message" required placeholder="Your Message" className="w-full p-2 border rounded h-24" />
-      <button type="submit" className="mx-auto block transition-transform hover:scale-105">
-        <Image src="/icons/contact.png" alt="Send" width={120} height={40} />
-      </button>
-    </form>
-  )}
-</Modal>
-    </main>
-  );
+    <motion.section className="sandbox-section" {...reveal}><div className="sandbox-art"><Image src="/icons/robot-chat.svg" alt="Friendly robot chatting" width={390} height={390}/></div><div className="sandbox-copy"><span className="eyebrow">NO COMMITMENT. JUST CURIOSITY.</span><h2>Take it for a test conversation.</h2><p>Build a lightweight agent, give it something to know, and see how it responds in the free sandbox.</p><a className="primary-cta" href="/embagent/"><span>Enter the sandbox</span><Image src="/icons/go-button.png" alt="" width={105} height={44}/></a></div></motion.section>
+
+    <section className="get-involved"><div><span className="eyebrow">FOLLOW THE INVESTIGATION</span><h2>We’re still building.<br/>Come shape what’s next.</h2></div><div className="involved-actions"><button onClick={()=>setShowJoinModal(true)}><Image src="/icons/join.png" alt="" width={124} height={48}/><span><strong>Join the list</strong>Get product updates and early invites.</span></button><button onClick={()=>setShowContactModal(true)}><Image src="/icons/contact.png" alt="" width={124} height={48}/><span><strong>Talk to us</strong>Share feedback, ideas, or partnership plans.</span></button></div></section>
+
+    <footer><a className="wordmark" href="#top"><Image src="/icons/detective.png" alt="" width={38} height={38}/><span>EMBAGENT</span></a><p>Custom knowledge. Useful conversations.</p><span>© {new Date().getFullYear()} Embagent</span></footer>
+
+    <Modal isOpen={showJoinModal} onClose={()=>setShowJoinModal(false)}>{joinSuccess?<div className="success-state"><Image src="/icons/cute-robot-showing-heart.png" alt="" width={150} height={150}/><h3>You’re on the list.</h3><p>We’ll keep you in the loop as the investigation unfolds. 🥳</p></div>:<form onSubmit={e=>submitForm(e,"https://formspree.io/f/mnndzvrz",()=>setJoinSuccess(true))} className="modal-form"><span className="eyebrow">EARLY ACCESS</span><h3>Join our mailing list</h3><p>New features, progress notes, and invitations—sent occasionally.</p><input type="email" name="email" required placeholder="you@example.com"/><label className="check-row"><input type="checkbox" name="consent" required/><span>I’m happy to receive Embagent updates.</span></label><button type="submit">Join the list →</button></form>}</Modal>
+    <Modal isOpen={showContactModal} onClose={()=>setShowContactModal(false)}>{contactSuccess?<div className="success-state"><Image src="/icons/robot-support.png" alt="" width={130} height={130}/><h3>Message received.</h3><p>We’ll be in touch soon. 🕵️</p></div>:<form onSubmit={e=>submitForm(e,"https://formspree.io/f/mwpoqbzl",()=>setContactSuccess(true))} className="modal-form"><span className="eyebrow">OPEN A CASE</span><h3>Talk to the team</h3><input name="name" required placeholder="Your name"/><input type="email" name="email" required placeholder="Your email"/><select name="reason"><option>General inquiry</option><option>Feedback</option><option>Partnership</option></select><textarea name="message" required placeholder="What’s on your mind?" rows={4}/><button type="submit">Send message →</button></form>}</Modal>
+  </main>;
 }

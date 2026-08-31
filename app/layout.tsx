@@ -19,8 +19,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "EmbAgent",
-  description: "EmbAgent is a platform that allows you to create and manage your own AI agents.",
+  title: "EmbAgent — Custom AI agents built around your knowledge",
+  description: "Create an AI agent with your knowledge, your voice, and a job to do. Build and test yours in the free EmbAgent sandbox.",
 };
 
 export default function RootLayout({

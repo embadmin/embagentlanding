@@ -1,400 +1,72 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Create Your Agent - Embagent</title>
-  <link rel="stylesheet" href="style.css" />
-  <!-- <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      padding: 2rem;
-      /* background-color: #f5f7fb; Restored consistent background */
-      color: #ffffff;
-    }
-
-    .step {
-      display: none;
-    }
-
-    .step.active {
-      display: block;
-      animation: fadeIn 0.3s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .icon-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      justify-content: center;
-      margin-bottom: 2rem;
-    }
-
-    .icon-card {
-      border: 2px solid transparent;
-      border-radius: 12px;
-      padding: 1rem;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-
-    .icon-card:hover {
-      transform: scale(1.05);
-    }
-
-    .icon-card.selected {
-      border-color: #4CAF50;
-      box-shadow: 0 0 12px #4CAF50;
-    }
-
-    .icon-card img {
-      width: 100px;
-      height: 100px;
-      object-fit: contain;
-    }
-
-    input, textarea, select {
-      width: 100%;
-      max-width: 500px;
-      padding: 0.6rem;
-      margin-top: 0.5rem;
-      margin-bottom: 1rem;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-    }
-
-    button {
-      padding: 0.6rem 1.2rem;
-      font-size: 1rem;
-      border-radius: 8px;
-      border: none;
-      background-color: #4CAF50;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      margin-right: 0.5rem;
-    }
-
-    button:hover {
-      background-color: #45a049;
-    }
-
-    .button-row {
-      margin-top: 1rem;
-    }
-
-    /* ---------- CHAT SCREEN STYLING ONLY ---------- */
-    #chatScreen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100vh;
-      /* background-color: #ffffff; */
-      display: flex;
-      flex-direction: column;
-      z-index: 10;
-      animation: fadeIn 0.4s ease;
-    }
-
-    #chatHeader {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #744d91;
-      padding: 1rem;
-      color: white;
-      font-size: 1.2rem;
-    }
-
-    #chatBox {
-      flex-grow: 1;
-      overflow-y: auto;
-      padding: 1.5rem;
-      /* background: #f2f2f2; */
-      border-top: 1px solid #ccc;
-    }
-
-    .chat-message {
-      opacity: 0;
-      transform: translateY(10px);
-      transition: all 0.3s ease-in-out;
-      margin: 0.5rem 0;
-      display: flex;
-    }
-
-    .chat-message.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .chat-message.user {
-      justify-content: flex-end;
-    }
-
-    .chat-message.agent {
-      justify-content: flex-start;
-    }
-
-    .message-bubble {
-      max-width: 70%;
-      padding: 0.75rem 1rem;
-      border-radius: 1rem;
-      background: #744d91;
-      color: #fff;
-      font-size: 0.95rem;
-      line-height: 1.4;
-      animation: popIn 0.3s ease;
-    }
-
-    .chat-message.user .message-bubble {
-      background: #787878;
-      text-align: right;
-    }
-
-    @keyframes popIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    #chatInputArea {
-      display: flex;
-      padding: 1rem;
-      /* background: #fff; */
-      border-top: 1px solid #ccc;
-    }
-
-    #userInput {
-      flex-grow: 1;
-      padding: 0.6rem;
-      font-size: 1rem;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      margin-right: 0.5rem;
-    }
-
-    #sendBtn {
-      background-color: #63497b;
-      color: white;
-      border: none;
-      padding: 0.6rem 1.2rem;
-      font-size: 1rem;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    #sendBtn:hover {
-      background-color: #4e3761;
-    }
-
-    #loadingOverlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(229, 206, 246, 0.7);
-      z-index: 9999;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .spinner {
-      border: 6px solid #f3f3f3;
-      border-top: 6px solid #63497b;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-  </style> -->
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#222222">
+  <title>Build an Agent — Embagent</title><meta name="description" content="Create and test a custom AI agent in the Embagent sandbox.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Oswald:wght@500;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="/"><img src="../icons/detective.png" alt=""><span>EMBAGENT<small>Agent workshop</small></span></a>
+      <div class="case-file"><span>CASE FILE</span><strong id="caseNumber">#NEW-AGENT</strong><small id="saveStatus">Saved in this browser</small></div>
+      <nav class="step-nav" aria-label="Builder progress">
+        <button class="step-link is-active" data-step-target="1"><span>01</span><div><strong>Identity</strong><small>Name & appearance</small></div></button>
+        <button class="step-link" data-step-target="2"><span>02</span><div><strong>Assignment</strong><small>Mission & behavior</small></div></button>
+        <button class="step-link" data-step-target="3"><span>03</span><div><strong>Knowledge</strong><small>Context & sources</small></div></button>
+        <button class="step-link" data-step-target="4"><span>04</span><div><strong>Review</strong><small>Confirm the brief</small></div></button>
+        <button class="step-link" data-step-target="5"><span>05</span><div><strong>Test</strong><small>Talk to your agent</small></div></button>
+      </nav>
+      <a class="back-link" href="/">← Back to Embagent</a>
+    </aside>
 
-  <!-- Home button now shows the home icon -->
-<button onclick="goHome()" id="homeButton">
-  <img
-    src="icons/home.png"
-    alt="Home"
-  />
-</button>
+    <main class="workspace">
+      <header class="workspace-header"><div><p class="eyebrow">CUSTOM AGENT BUILDER</p><h1 id="workspaceTitle">Choose your agent</h1></div><div class="progress-label"><span id="progressText">Step 1 of 5</span><div class="progress-track"><i id="progressBar"></i></div></div></header>
 
-  <!-- Step Sections (unchanged except layout cleanup) -->
-  <div id="step1" class="step active">
-    <h2>Step 1: Pick Your Agent Icon</h2>
-    <div class="icon-grid">
-      <div class="icon-card" data-icon="chatbot.svg"><img src="../embagent/icons/chatbot.svg" alt="Chatbot Icon"></div>
-      <div class="icon-card" data-icon="robot.png"><img src="../embagent/icons/robot.png" alt="Robot Icon"></div>
-      <div class="icon-card" data-icon="robot-support.png"><img src="../embagent/icons/robot-support.png" alt="Support Robot Icon"></div>
-      <div class="icon-card" data-icon="robot (1).png"><img src="../embagent/icons/robot (1).png" alt="Robot Icon"></div>
-      <div class="icon-card" data-icon="robot (2).png"><img src="../embagent/icons/robot (2).png" alt="Robot Icon"></div>
-      <div class="icon-card" data-icon="robot (3).png"><img src="../embagent/icons/robot (3).png" alt="Robot Icon"></div>
-      <div class="icon-card" data-icon="chat.png"><img src="../embagent/icons/chat.png" alt="Chat Icon"></div>
-      <div class="icon-card" data-icon="chat-info.png"><img src="../embagent/icons/chat-info.png" alt="Chat Info Icon"></div>
-    </div>
-    <div class="navigation">
+      <section id="step1" class="step active" data-title="Choose your agent">
+        <div class="step-intro"><span>IDENTITY / 01</span><h2>Who are we building?</h2><p>Pick a face and give your agent a memorable name. You can change both before launch.</p></div>
+        <div class="field-block"><label>Choose an icon</label><div class="icon-grid" id="iconGrid">
+          <button class="icon-card" type="button" data-icon="chatbot.svg"><img src="icons/chatbot.svg" alt="Chat bubble bot"></button>
+          <button class="icon-card" type="button" data-icon="robot.png"><img src="icons/robot.png" alt="Classic robot"></button>
+          <button class="icon-card" type="button" data-icon="robot-support.png"><img src="icons/robot-support.png" alt="Support robot"></button>
+          <button class="icon-card" type="button" data-icon="robot (1).png"><img src="icons/robot (1).png" alt="Robot option one"></button>
+          <button class="icon-card" type="button" data-icon="robot (2).png"><img src="icons/robot (2).png" alt="Robot option two"></button>
+          <button class="icon-card" type="button" data-icon="robot (3).png"><img src="icons/robot (3).png" alt="Robot option three"></button>
+        </div></div>
+        <label class="field"><span>Agent name</span><input id="agentName" maxlength="40" placeholder="e.g. Scout, Nova, Sage" autocomplete="off"><small>This is how your agent introduces itself.</small></label>
+        <div class="step-actions"><span></span><button class="primary" type="button" data-next="2">Continue <b>→</b></button></div>
+      </section>
 
-      <button class="btn-primary" onclick="goToStep2()">
-        <img src="icons/next.png" alt="Next" />
-      </button>
-    </div>
+      <section id="step2" class="step" data-title="Define the assignment">
+        <div class="step-intro"><span>ASSIGNMENT / 02</span><h2>Give it a job to do.</h2><p>A focused agent gives better answers. Describe the outcome it should help people reach.</p></div>
+        <label class="field"><span>Mission</span><textarea id="agentMission" rows="4" placeholder="Help customers understand our products and choose the right plan."></textarea><small>Write one or two clear sentences.</small></label>
+        <div class="two-column"><label class="field"><span>Area of expertise</span><input id="agentExpertise" placeholder="Product support, HR policy, onboarding…"></label><label class="field"><span>Tone of voice</span><select id="agentEtiquette"><option value="Friendly and clear">Friendly and clear</option><option value="Professional">Professional</option><option value="Warm and empathetic">Warm and empathetic</option><option value="Concise">Concise</option><option value="Playful">Playful</option></select></label></div>
+        <div class="tone-preview"><span>VOICE PREVIEW</span><p id="tonePreview">“Hi! I’m here to help. What can we figure out together?”</p></div>
+        <div class="step-actions"><button class="secondary" type="button" data-back="1">← Back</button><button class="primary" type="button" data-next="3">Continue <b>→</b></button></div>
+      </section>
+
+      <section id="step3" class="step" data-title="Add knowledge">
+        <div class="step-intro"><span>KNOWLEDGE / 03</span><h2>What should it know?</h2><p>Add as much or as little context as you need. For this sandbox, every source is optional.</p></div>
+        <label class="field"><span>Key information</span><textarea id="knowledgeText" rows="6" placeholder="Paste FAQs, product details, policies, talking points, or anything the agent should reference…"></textarea></label>
+        <label class="field"><span>Helpful links</span><textarea id="agentLinks" rows="3" placeholder="https://example.com/help, https://example.com/pricing"></textarea></label>
+        <label class="upload-zone" for="knowledgeFile"><img src="../icons/file.png" alt=""><strong>Drop knowledge files here</strong><span>or choose PDF, TXT, DOC, or CSV files</span><input type="file" id="knowledgeFile" multiple accept=".pdf,.txt,.doc,.docx,.csv,.md"><small id="fileList">No files selected</small></label>
+        <div class="step-actions"><button class="secondary" type="button" data-back="2">← Back</button><button class="primary" type="button" data-next="4">Review agent <b>→</b></button></div>
+      </section>
+
+      <section id="step4" class="step" data-title="Review the brief">
+        <div class="step-intro"><span>REVIEW / 04</span><h2>One last look.</h2><p>Confirm the brief before the agent enters the test lab.</p></div>
+        <div class="review-card"><div class="review-agent"><img id="summaryAvatar" src="icons/robot.png" alt=""><div><small>YOUR AGENT</small><h3 id="summaryName">Unnamed agent</h3><span id="summaryTone">Friendly and clear</span></div></div><dl><div><dt>Mission</dt><dd id="summaryMission">—</dd></div><div><dt>Expertise</dt><dd id="summaryExpertise">—</dd></div><div><dt>Knowledge</dt><dd id="summaryKnowledge">No sources added</dd></div></dl></div>
+        <div class="step-actions"><button class="secondary" type="button" data-back="3">← Back</button><button class="primary launch" id="createAgentButton" type="button">Create agent <b>✦</b></button></div>
+      </section>
+
+      <section id="step5" class="step chat-step" data-title="Test your agent">
+        <div class="chat-shell"><header class="chat-header"><div class="agent-identity"><span class="online-dot"></span><img id="agentAvatar" src="icons/robot.png" alt=""><div><h2 id="agentDisplayName">Your agent</h2><small>Online · sandbox mode</small></div></div><button id="infoButton" type="button" aria-expanded="false">Agent brief ⓘ</button></header><div id="agentInfo" class="agent-info" hidden><p><strong>Mission</strong><span id="agentMissionInfo"></span></p><p><strong>Knowledge</strong><span id="agentFilesInfo"></span></p></div><div id="chatBox" class="chat-box" aria-live="polite"></div><form id="chatForm" class="chat-form"><input id="userInput" placeholder="Ask your agent a question…" autocomplete="off"><button type="submit" aria-label="Send message">↑</button></form></div>
+        <div class="chat-side"><p class="eyebrow">TEST LAB</p><h3>Try a real question.</h3><p>Ask about the mission, the information you supplied, or how the agent would help a user.</p><div class="prompt-list"><button type="button">What can you help me with?</button><button type="button">Summarize what you know.</button><button type="button">How would you greet a new user?</button></div><button class="secondary restart" id="restartButton" type="button">Start a new agent</button></div>
+      </section>
+    </main>
   </div>
-
-  <div id="step2" class="step">
-    <h2>Step 2: Name Your Agent</h2>
-    <input type="text" id="agentName" placeholder="e.g. Zenon" />
-    <div class="navigation">
-      <button class="btn-secondary" onclick="goToStep1()">
-        <img src="icons/back.png" alt="Back" />
-      </button>
-      <button class="btn-primary" onclick="goToStep3()">
-        <img src="icons/next.png" alt="Next" />
-      </button>
-    </div>
-  </div>
-
-  <div id="step3" class="step">
-    <h2>Step 3: What is your agent’s mission?</h2>
-    <textarea id="agentMission" rows="4" placeholder="e.g. Customer Support, HR Help..."></textarea>
-    <div class="navigation">
-      <button class="btn-secondary" onclick="goToStep2()">
-        <img src="icons/back.png" alt="Back" />
-      </button>
-      <button class="btn-primary" onclick="goToStep4()">
-        <img src="icons/next.png" alt="Next" />
-      </button>
-    </div>
-  </div>
-
-  <div id="step4" class="step">
-    <h2>Step 4: Train Your Agent</h2>
-    <label for="agentExpertise">Expertise:</label>
-    <input type="text" id="agentExpertise" placeholder="e.g. Shopify setup" />
-
-    <label for="agentEtiquette">Tone:</label>
-    <select id="agentEtiquette">
-      <option value="Chill">Chill</option>
-      <option value="Professional">Professional</option>
-      <option value="Funny">Funny</option>
-      <option value="Empathetic">Empathetic</option>
-      <option value="Concise">Concise</option>
-    </select>
-
-    <label for="agentLinks">Helpful links:</label>
-    <textarea id="agentLinks" placeholder="URLs separated by commas..."></textarea>
-
-    <label for="knowledgeFile">Upload knowledge files:</label>
-    <input type="file" id="knowledgeFile" multiple />
-    <div class="navigation">
-      <button class="btn-secondary" onclick="goToStep3()">
-        <img
-          src="icons/back.png"
-          alt="Back"
-           
-        />
-      </button>
-      <button class="btn-primary" onclick="goToStep5()">
-        <img
-          src="icons/next.png"
-          alt="Next"
-           
-        />
-      </button>
-    </div>
-  </div>
-
-  <div id="step5" class="step">
-    <h2>Step 5: Confirm Agent</h2>
-    <div id="agentSummary"></div>
-    <div class="navigation">
-      <button class="btn-secondary" onclick="goToStep4()">
-        <img
-          src="icons/back.png"
-          alt="Back"
-           
-        />
-      </button>
-      <button class="btn-primary" onclick="submitAgent()">
-        <img
-          src="icons/create.png"
-          alt="Next"
-           
-        />
-      </button>
-    </div>
-  </div>
-
-  <!-- CHAT SCREEN -->
-  <!-- ─── Chat Screen (initially hidden) ───────────────────────── -->
-<div id="chatScreen" class="">
-  <!-- 1) HEADER: only avatar, name, info-toggle & close -->
-  <div id="chatHeader">
-    <!-- ── Left zone: Home + Start Over ─────────────────────────── -->
-    <div class="header-left">
-      <button id="homeButton" onclick="goHome()" title="Home">
-        <img src="icons/home.png" alt="Home" />
-      </button>
-      <!-- <button id="startOver" onclick="goToStep1()" title="Start Over">
-        <img src="icons/start-over.png" alt="Start Over" />
-      </button> -->
-    </div>
-  
-    <!-- ── Center zone: Avatar + Name ─────────────────────────── -->
-    <div class="header-center">
-      <img
-        id="agentAvatar"
-        src=""
-        alt="Agent Avatar"
-      />
-      <span id="agentDisplayName">HELPER</span>
-    </div>
-  
-    <!-- ── Right zone: Info ─────────────────────────────────────── -->
-    <div class="header-right">
-      <!-- Edit button first -->
-      <button id="editButton" title="Edit">
-        <img src="icons/edit.png" alt="Edit" />
-      </button>
-      <!-- Info button -->
-      <button id="infoToggle" title="Agent Info">
-        <img src="icons/info.png" alt="Info" />
-      </button>
-    </div>
-  </div>
-
-  <!-- 2) AGENT INFO PANEL: hidden until toggled -->
-  <div id="agentInfo">
-    <p id="agentMissionInfo"></p>
-    <p id="agentFilesInfo"></p>
-  </div>
-
-  <!-- 3) MESSAGE AREA: scrollable -->
-  <div id="chatBox"></div>
-
-  <!-- 4) INPUT BAR: pinned to bottom -->
-  <div id="chatInputArea">
-    <input type="text" id="userInput" placeholder="Ask me anything..." />
-    <button id="sendBtn" onclick="sendMessage()">Send</button>
-  </div>
-</div>
-
-  
-  <!-- ──────────────────────────────────────────────────────────── -->
-  <!-- ─── Loading Overlay (hidden by default) ───────────────── -->
-<!-- new -->
-<div id="loadingOverlay">
-  <div class="spinner"></div>
-</div>
-<!-- ─────────────────────────────────────────────────────────── -->
+  <div id="loadingOverlay" hidden><div class="loading-card"><img src="../icons/detective.png" alt=""><div class="spinner"></div><h2>Preparing your agent…</h2><p>Reviewing the brief and organizing its knowledge.</p></div></div>
+  <div id="toast" role="status" aria-live="polite"></div>
   <script src="script.js"></script>
 </body>
 </html>
